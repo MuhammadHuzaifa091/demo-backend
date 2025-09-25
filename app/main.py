@@ -7,7 +7,6 @@ from app.core.config import settings
 from app.api.v1.api import api_v1_router
 
 
-
 def create_application() -> FastAPI:
     """Create FastAPI app with middleware and routes."""
 
@@ -24,7 +23,7 @@ def create_application() -> FastAPI:
     if settings.BACKEND_CORS_ORIGINS:
         application.add_middleware(
             CORSMiddleware,
-            allow_origins=[str(origin) for origin in settings.BACKEND_CORS_ORIGINS],
+            allow_origins=["*", "demo-frontend-lac.vercel.app"],
             allow_credentials=True,
             allow_methods=["*"],
             allow_headers=["*"],
@@ -40,7 +39,7 @@ try:
     from app.schemas.repair_request import RepairRequest as RepairRequestSchema
     from app.schemas.service import Service as ServiceSchema
     from app.schemas.user import UserRead
-    
+
     # This ensures all forward references are resolved
     RepairRequestSchema.model_rebuild()
     ServiceSchema.model_rebuild()
