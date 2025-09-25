@@ -20,15 +20,14 @@ def create_application() -> FastAPI:
     )
 
     # Set up CORS
-    if settings.BACKEND_CORS_ORIGINS:
-        application.add_middleware(
-            CORSMiddleware,
-            allow_origins=["*", "demo-frontend-lac.vercel.app",
-                           "https://demo-frontend-lac.vercel.app/", "https://demo-frontend-lac.vercel.app"],
-            allow_credentials=True,
-            allow_methods=["*"],
-            allow_headers=["*"],
-        )
+    application.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*", "demo-frontend-lac.vercel.app",
+                       "https://demo-frontend-lac.vercel.app/", "https://demo-frontend-lac.vercel.app"],
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
     application.include_router(api_v1_router)
     return application
 
