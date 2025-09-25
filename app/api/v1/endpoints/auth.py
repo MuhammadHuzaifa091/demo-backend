@@ -22,6 +22,18 @@ async def test_roles():
     }
 
 
+@router.post("/debug-registration")
+async def debug_registration(user_data: RoleBasedRegistration):
+    """Debug endpoint to test registration data validation."""
+    return {
+        "received_role": user_data.role,
+        "role_type": type(user_data.role).__name__,
+        "role_value": user_data.role.value if hasattr(user_data.role, 'value') else str(user_data.role),
+        "all_roles": [role.value for role in UserRole],
+        "message": "Registration data received successfully"
+    }
+
+
 @router.post("/register-with-role", response_model=UserRead, status_code=status.HTTP_201_CREATED)
 async def register_with_role(
     user_data: RoleBasedRegistration,

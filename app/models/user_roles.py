@@ -13,6 +13,7 @@ class UserRole(str, enum.Enum):
     USER = "user"
     PROVIDER_INDIVIDUAL = "provider_individual"
     PROVIDER_ORGANIZATION = "provider_organization"
+    ADMIN = "admin"
 
 
 class UserRoleFields:

@@ -3,22 +3,18 @@
 from fastapi import APIRouter
 from app.core.users import fastapi_users
 from app.core.security import auth_backend
-from app.api.v1.endpoints import test, repair_requests, service_providers, services, auth
+from app.api.v1.endpoints import test, repair_requests, service_providers, services, auth, admin
 from app.schemas.user import UserRead, UserCreate, UserUpdate
 
 api_v1_router = APIRouter(prefix="/api/v1")
 
-# FastAPI-Users routers
+# FastAPI-Users routers (excluding default registration)
 api_v1_router.include_router(
     fastapi_users.get_auth_router(auth_backend),
     prefix="/auth",
     tags=["auth"],
 )
-api_v1_router.include_router(
-    fastapi_users.get_register_router(UserRead, UserCreate),
-    prefix="/auth",
-    tags=["auth"],
-)
+# Removed default registration router - using custom one instead
 api_v1_router.include_router(
     fastapi_users.get_verify_router(UserRead),
     prefix="/auth",
@@ -47,4 +43,9 @@ api_v1_router.include_router(
     services.router, 
     prefix="/services", 
     tags=["Services"]
+)
+api_v1_router.include_router(
+    admin.router, 
+    prefix="/admin", 
+    tags=["Admin"]
 )

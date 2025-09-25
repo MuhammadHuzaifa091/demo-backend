@@ -9,12 +9,13 @@ from app.core.config import settings
 
 
 # Async engine for FastAPI
+# Use SQLite for local development
+DATABASE_URL = "sqlite+aiosqlite:///./database.db"
+
 async_engine = create_async_engine(
-    "postgresql+asyncpg://neondb_owner:npg_bO86CnhcxaSp@ep-soft-sky-adqavxsh-pooler.c-2.us-east-1.aws.neon.tech/neondb",
+    DATABASE_URL,
     echo=settings.ENVIRONMENT == "development",
     future=True,
-    pool_pre_ping=True,
-    pool_recycle=300,
 )
 
 # Async session factory for FastAPI

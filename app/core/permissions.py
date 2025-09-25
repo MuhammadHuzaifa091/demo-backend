@@ -49,6 +49,27 @@ def require_provider_role(current_user: User = Depends(current_active_user)) -> 
     return current_user
 
 
+def require_admin_role(current_user: User = Depends(current_active_user)) -> User:
+    """Guard that only allows users with 'admin' role."""
+    if current_user.role != UserRole.ADMIN:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Access denied. Only administrators can access this endpoint."
+        )
+    return current_user
+
+
+def require_admin_or_provider_role(current_user: User = Depends(current_active_user)) -> User:
+    """Guard that allows admins and providers."""
+    allowed_roles = [UserRole.ADMIN, UserRole.PROVIDER_INDIVIDUAL, UserRole.PROVIDER_ORGANIZATION]
+    if current_user.role not in allowed_roles:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Access denied. Only administrators and service providers can access this endpoint."
+        )
+    return current_user
+
+
 def require_any_authenticated_user(current_user: User = Depends(current_active_user)) -> User:
     """Guard that allows any authenticated user (for general endpoints)."""
     return current_user
