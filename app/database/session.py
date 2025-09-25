@@ -7,12 +7,10 @@ from sqlalchemy.orm import sessionmaker
 
 from app.core.config import settings
 
-# postgresql+asyncpg://neondb_owner:npg_bO86CnhcxaSp@ep-soft-sky-adqavxsh-pooler.c-2.us-east-1.aws.neon.tech/neondb
-
 
 # Async engine for FastAPI
 async_engine = create_async_engine(
-    "sqlite+aiosqlite:///database.db",
+    "postgresql+asyncpg://neondb_owner:npg_bO86CnhcxaSp@ep-soft-sky-adqavxsh-pooler.c-2.us-east-1.aws.neon.tech/neondb",
     echo=settings.ENVIRONMENT == "development",
     future=True,
     pool_pre_ping=True,

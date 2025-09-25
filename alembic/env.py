@@ -45,7 +45,7 @@ target_metadata = Base.metadata
 
 
 def get_url():
-    return "sqlite:///database.db"
+    return "postgresql://neondb_owner:npg_bO86CnhcxaSp@ep-soft-sky-adqavxsh-pooler.c-2.us-east-1.aws.neon.tech/neondb"
 
 
 def run_migrations_offline():
