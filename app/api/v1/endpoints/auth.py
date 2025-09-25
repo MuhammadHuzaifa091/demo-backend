@@ -62,12 +62,24 @@ async def register_with_role(
     
     except Exception as e:
         print(f"Registration error: {str(e)}")  # Debug logging
-        if "email" in str(e).lower():
+        error_str = str(e).lower()
+        if "email" in error_str and ("already" in error_str or "exists" in error_str):
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="User with this email already exists"
             )
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f"Registration failed: {str(e)}"
-        )
+        elif "password" in error_str:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Password validation failed"
+            )
+        elif "role" in error_str:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Invalid role specified"
+            )
+        else:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Registration failed: {str(e)}"
+            )

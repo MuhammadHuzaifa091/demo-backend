@@ -23,7 +23,8 @@ def create_application() -> FastAPI:
     application.add_middleware(
         CORSMiddleware,
         allow_origins=["*", "demo-frontend-lac.vercel.app",
-                       "https://demo-frontend-lac.vercel.app/", "https://demo-frontend-lac.vercel.app"],
+                       "https://demo-frontend-lac.vercel.app/", "https://demo-frontend-lac.vercel.app",
+                       "https://demo.publicvm.com"],
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
